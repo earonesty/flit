@@ -232,7 +232,7 @@ def upload_file(file:Path, metadata:Metadata, repo):
                          data=data,
                          files=files,
                          auth=(repo['username'], repo['password']),
-                        )
+                        timeout=60)
     resp.raise_for_status()
 
 def verify(metadata:Metadata, repo_name):
@@ -241,8 +241,8 @@ def verify(metadata:Metadata, repo_name):
     repo = get_repository(repo_name)
     data = build_post_data('verify', metadata)
     resp = requests.post(repo['url'], data=data,
-                         auth=(repo['username'], repo['password'])
-                        )
+                         auth=(repo['username'], repo['password']), 
+                        timeout=60)
     resp.raise_for_status()
     log.info('Verification succeeded')
 
